@@ -73,11 +73,12 @@ drawGrid g (visited, path) count =
     scale = gridDrawScale g
 
 printExplicitGraph g costFn algo = do
-  putStrLn ("length: " ++ show (List.length path))
-  putStrLn ("cost: " ++ show (List.foldr (\ (a, b) cost -> cost + costFn a b) 0 (List.zip (ExplicitGraph.start g : rpath) rpath)))
-  putStrLn (show (ExplicitGraph.start g : rpath))
+  putStrLn $ "length: " ++ show (List.length path)
+  putStrLn $ "cost: " ++ show cost
+  print $ ExplicitGraph.start g : rpath
   putStrLn ""
   where
+    cost = List.foldr (\ (a, b) cost -> cost + costFn a b) 0 (List.zip (ExplicitGraph.start g : rpath) rpath)
     (_, path) = algo g
     rpath = List.reverse path
 
