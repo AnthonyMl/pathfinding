@@ -24,6 +24,7 @@ instance Hashable Vec2
 dot :: Vec2 -> Vec2 -> Int
 dot (Vec2 x1 y1) (Vec2 x2 y2) = x1 * x2 + y1 * y2
 
+fromList :: Functor f => f (Int, Int) -> f Vec2
 fromList xs = fmap (uncurry Vec2) xs
 
 
