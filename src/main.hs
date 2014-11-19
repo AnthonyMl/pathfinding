@@ -75,7 +75,7 @@ drawGrid g (visited, path) count =
 printExplicitGraph g costFn algo = do
   putStrLn ("length: " ++ show (List.length path))
   putStrLn ("cost: " ++ show (List.foldr (\ (a, b) cost -> cost + costFn a b) 0 (List.zip (ExplicitGraph.start g : rpath) rpath)))
-  putStrLn (show (ExplicitGraph.start g : rpath))
+  print $ ExplicitGraph.start g : rpath
   putStrLn ""
   where
     (_, path) = algo g
