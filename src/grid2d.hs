@@ -38,13 +38,15 @@ value Grid2D.Right = Vec2   1    0
 apply :: Vec2 -> Action -> Vec2
 apply vec action = vec + value action
 
+inBounds :: Grid2D -> Vec2 -> Action -> Bool
+inBounds grid (Vec2 _ y) Grid2D.Up    = y < Grid2D.size grid
+inBounds _    (Vec2 _ y) Grid2D.Down  = y >= 0
+inBounds _    (Vec2 x _) Grid2D.Left  = x >= 0
+inBounds grid (Vec2 x _) Grid2D.Right = x < Grid2D.size grid
+
 isValid :: Grid2D -> Vec2 -> Action -> Bool
-isValid grid state action
-  | Set.member newState (Grid2D.obstacles grid) = False
-  | action == Grid2D.Up    = y newState < Grid2D.size grid
-  | action == Grid2D.Down  = y newState >= 0
-  | action == Grid2D.Left  = x newState >= 0
-  | action == Grid2D.Right = x newState < Grid2D.size grid
+isValid grid state action =
+    inBounds grid newState action && not (Set.member newState (Grid2D.obstacles grid))
   where
     newState = apply state action
 
