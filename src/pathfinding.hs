@@ -37,7 +37,7 @@ search g q considered path opFirst opRest
 breadthFirstSearch :: (Graph graphT stateT) => graphT -> ([stateT], [stateT])
 breadthFirstSearch g =
   search g (Sequence.singleton start) (Map.singleton start start) []
-    (\ q -> Sequence.index q 0)
+    (`Sequence.index` 0)
     (Sequence.drop 1)
   where
     start = Graph.start g
@@ -62,7 +62,7 @@ prioritySearch_r g edgeFn heuristicFn q dead path
   | otherwise             = prioritySearch_r g edgeFn heuristicFn q' dead' (state : path)
   where
     ((_, (state, parent, edgeCost)), restQ) = fromJust (Heap.view q)
-    (visited, neighbors) = List.partition (\ s -> member s dead) (Graph.getNeighbors g state)
+    (visited, neighbors) = List.partition (`member` dead) (Graph.getNeighbors g state)
     totalCost     s      = edgeCost + edgeFn state s + heuristicFn g s
     totalEdgeCost s      = edgeCost + edgeFn state s
     toConsider           = List.filter (\ s -> totalEdgeCost s < snd (fromJust (Map.lookup s dead))) visited
