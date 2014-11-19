@@ -27,7 +27,7 @@ create size start goal = Grid2D size start goal Set.empty
 addObstacles :: Grid2D -> [Vec2] -> Grid2D
 addObstacles (Grid2D size start goal obstacles) newObstacles = Grid2D size start goal (Set.union obstacles (Set.fromList newObstacles))
 
-data Action = Up | Down | Left | Right deriving (Eq)
+data Action = Up | Down | Left | Right deriving (Eq, Enum)
 
 value :: Action -> Vec2
 value Grid2D.Up    = Vec2   0    1
@@ -50,7 +50,7 @@ isValid grid state action
 
 
 instance Graph Grid2D Vec2 where
-  getNeighbors g state = List.map (apply state) (List.filter (isValid g state) [Grid2D.Up, Grid2D.Down, Grid2D.Left, Grid2D.Right])
+  getNeighbors g state = List.map (apply state) (List.filter (isValid g state) [Grid2D.Up .. Grid2D.Right])
   start                = Grid2D.start
   goal                 = Grid2D.goal
 
