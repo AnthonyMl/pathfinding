@@ -10,7 +10,7 @@ import Data.List           as List
 import Data.Sequence       as Sequence
 import Data.Heap           as Heap
 import Data.HashMap.Strict as Map
-import Data.Hashable       as Hashable
+import Data.Hashable       as Hashable ()
 
 import Graph
 
